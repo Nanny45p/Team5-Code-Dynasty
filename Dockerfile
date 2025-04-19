@@ -19,4 +19,4 @@ COPY --chown=node . .
 USER $USER
 EXPOSE 4000
 
-CMD ["node", "server.js"]
+CMD ["npm", "start"]
