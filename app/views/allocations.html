@@ -1,53 +1,52 @@
-{% extends "./layout.html" %} {% block title %}Allocations{% endblock %} {% block content %}
+{% extends "./layout.html" %}
 
-<div class="row">
-    <div class="col-lg-12">
+{% block title %}Asset Allocations{% endblock %}
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    Filter Assets based on Stock Performance
-                </h3>
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Filter Assets Based on Stock Performance</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/allocations/{{userId}}" method="get" role="search">
+                        <div class="mb-3">
+                            <!-- UX & security fix: limit input range -->
+                            <label for="threshold" class="form-label">Stocks Threshold (%)</label>
+                            <input
+                                type="number"
+                                min="0"
+                                max="99"
+                                class="form-control"
+                                id="threshold"
+                                name="threshold"
+                                placeholder="Enter a number between 0 and 99"
+                                required
+                            />
+                            <div class="form-text">
+                                Show allocations where domestic stock percentage is above the specified value.
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </form>
+                </div>
             </div>
 
-            <div class="panel-body">
-
-                <form action="/allocations/{{userId}}" method="get" role="search">
-                    <div class="form-group">
-                        <!--Fix for A1 - 2 NoSQL Injection - Provide validation for input.
-                        Adhering to defence in depth, on the front-end mostly for UX.
-                        The attacker, or user should not be able to enter anything other than 0-99.              
-                        Also implement fix in allocations-dao.js-->
-                        <!--<input type="number" min="0" max="99" class="form-control" placeholder="Stocks Threshold" name="threshold" />-->
-                        <input type="text" class="form-control" placeholder="Stocks Threshold" name="threshold" />
-                        <p class="help-block">Using above threshold value, it will return all assets allocation above the specified stocks percentage number.</p>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-
+            {% for allocation in allocations %}
+            <div class="card border-info mb-3">
+                <div class="card-header bg-info text-white">
+                    <strong>Asset Allocation for {{allocation.firstName}} {{allocation.lastName}}</strong>
+                </div>
+                <div class="card-body">
+                    <p class="mb-2">Domestic Stocks: <strong>{{allocation.stocks}}%</strong></p>
+                    <p class="mb-2">Funds: <strong>{{allocation.funds}}%</strong></p>
+                    <p class="mb-0">Bonds: <strong>{{allocation.bonds}}%</strong></p>
+                </div>
             </div>
+            {% endfor %}
         </div>
-
-        {% for allocation in allocations %}
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <strong>Asset Allocations for {{allocation.firstName}} {{allocation.lastName}}</strong>
-            </div>
-            <div class="panel-body">
-                <p>Domestic Stocks :
-                    <strong>{{allocation.stocks}} %</strong>
-                </p>
-                <p>Funds:
-                    <strong>{{allocation.funds}} %</strong>
-                </p>
-                <p>Bonds:
-                    <strong>{{allocation.bonds}} %</strong>
-                </p>
-            </div>
-        </div>
-        {% endfor %}
-
     </div>
 </div>
 {% endblock %}

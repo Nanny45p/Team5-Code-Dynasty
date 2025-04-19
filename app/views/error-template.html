@@ -1,14 +1,46 @@
-<!doctype HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <title>Internal Error</title>
+    <meta charset="UTF-8">
+    <title>Something Went Wrong</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        .error-box {
+            max-width: 500px;
+            padding: 2rem;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="error-box">
+        <i class="fa fa-bug fa-4x text-danger mb-3"></i>
+        <h1 class="text-danger">500 - Internal Server Error</h1>
+        <p class="lead">Something went wrong on our end. We’re already looking into it.</p>
+        {% if error %}
+            <p class="text-muted"><small>Error Details: {{ error }}</small></p>
+        {% endif %}
+        <a href="/" class="btn btn-primary mt-3">
+            <i class="fa fa-home me-1"></i> Go Back Home
+        </a>
+    </div>
 
-    Oops..
-    <br>{{error}}
+    <!-- Optional: Bootstrap JS (for future interactive components) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
-</html>
+            </html>
