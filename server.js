@@ -9,6 +9,7 @@ const consolidate = require("consolidate"); // Templating library adapter for Ex
 const swig = require("swig");
 // const helmet = require("helmet");
 const MongoClient = require("mongodb").MongoClient; // Driver for connecting to MongoDB
+const uri = "mongodb+srv://nodegoat:2yJwS_hhkdWu2cH@atlascluster.l0uihbk.mongodb.net/nodegoat?retryWrites=true&w=majority&appName=AtlasCluster";
 const http = require("http");
 const marked = require("marked");
 //const nosniff = require('dont-sniff-mimetype');
@@ -27,7 +28,7 @@ const httpsOptions = {
 };
 */
 
-MongoClient.connect(db, (err, db) => {
+MongoClient.connect(uri, (err, db) => {
     if (err) {
         console.log("Error: DB: connect");
         console.log(err);
